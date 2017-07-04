@@ -12,10 +12,13 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
-//cell按钮的复用ID
-#define CELL_BUTTON_ID  @"CELLBUTTON"
-
-
 @interface BaseVC : UIViewController
+
+@property(nonatomic,strong)UIView *testView;//测试view
+
+@property(nonatomic,strong)NSMutableArray *buttonSource;//按钮的数据源
+
+//按钮的点击事件
+-(void)didSelectedButton:(NSIndexPath *)indexpath;
 
 @end

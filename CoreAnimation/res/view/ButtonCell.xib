@@ -20,7 +20,9 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="CELLBUTTON" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHz-f0-hUZ">
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                        <state key="normal" title="Button"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
                     </button>
                 </subviews>
             </view>

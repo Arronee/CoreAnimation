@@ -8,13 +8,8 @@
 
 #import "CABaseAnimationVC.h"
 
-@interface CABaseAnimationVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface CABaseAnimationVC ()
 
-@property(nonatomic,strong)UIView *testView;//测试view
-
-@property(nonatomic,strong)UICollectionView *collectionView; //按钮组
-
-@property(nonatomic,strong)NSMutableArray *buttonSource;//按钮的数据源
 
 @end
 
@@ -24,57 +19,71 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //初始化布局
-    [self initView];
-   
-}
-
-//初始化布局
--(void)initView{
-
-    //测试view
-    _testView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT/2-50, 100, 100)];
-    _testView.backgroundColor = [UIColor brownColor];
-    [self.view addSubview:_testView];
+    //更改按钮组的数据源
+    self.buttonSource = [NSMutableArray arrayWithObjects:@"位移",@"透明度",@"缩放",@"旋转",@"背景色", nil];
     
-    //按钮组
-    _buttonSource = [NSMutableArray arrayWithObjects:@"位移",@"透明度",@"缩放",@"旋转",@"背景色", nil];
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(100, 60);
-    
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-150, SCREEN_WIDTH, 150) collectionViewLayout:layout];
-    _collectionView.delegate = self;
-    _collectionView.dataSource = self;
-    [self.view addSubview:_collectionView];
-    [_collectionView registerNib:[UINib nibWithNibName:@"ButtonCell" bundle:nil] forCellWithReuseIdentifier:CELL_BUTTON_ID];
     
 }
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 
-    return _buttonSource.count;
+//按钮的点击事件
+-(void)didSelectedButton:(NSIndexPath *)indexpath{
+
+    switch (indexpath.row) {
+        case 0:             //位移的点击事件
+            [self displacementTap];
+            break;
+        case 1:             //透明度的点击事件
+            [self transparencyTap];
+            break;
+        case 2:             //缩放的点击事件
+            [self zoomTap];
+            break;
+        case 3:             //旋转的点击事件
+            [self rotationTap];
+            break;
+        case 4:             //背景色的点击事件
+            [self backgroundColorTap];
+            break;
+        default:
+            break;
+    }
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+//位移的点击事件
+-(void)displacementTap{
 
-    ButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CELL_BUTTON_ID forIndexPath:indexPath];
+    CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+    basicAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(50, 50)];
+    basicAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(50, 200)];
+    basicAnimation.duration = 5.0;
+    basicAnimation.fillMode = kCAFillModeForwards;
+    //用来设置动画执行结束之后，控件的位置，no即动画结束之后控件停留在动画结束之后的位置。
+    basicAnimation.removedOnCompletion = NO;
+    //结束后执行逆动画
+    basicAnimation.autoreverses = YES;
+    // 动画先加速后减速
+    basicAnimation.timingFunction =
+    [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseInEaseOut];
+    [self.testView.layer addAnimation:basicAnimation forKey:@"TEST"];
     
-    return cell;
-
-  }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    //移除动画
+    //[self.testView.layer removeAnimationForKey:@"TEST"];
 }
+//透明度的点击事件
+-(void)transparencyTap{
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
+//缩放的点击事件
+-(void)zoomTap{
+    
+}
+//旋转的点击事件
+-(void)rotationTap{
 
+
+}
+//背景色的点击事件
+-(void)backgroundColorTap{
+
+}
 @end
