@@ -56,8 +56,8 @@
     basicAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(50, 50)];
     basicAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(50, 200)];
     basicAnimation.duration = 5.0;
+    //用来设置动画执行结束之后，控件的位置，no即动画结束之后控件停留在动画结束之后的位置。需要设置下面两个属性
     basicAnimation.fillMode = kCAFillModeForwards;
-    //用来设置动画执行结束之后，控件的位置，no即动画结束之后控件停留在动画结束之后的位置。
     basicAnimation.removedOnCompletion = NO;
     //结束后执行逆动画
     basicAnimation.autoreverses = YES;
